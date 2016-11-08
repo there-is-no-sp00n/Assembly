@@ -11,7 +11,7 @@ main:
 	MOV R2, R11
 	MOV R3, R0
 	BL execute_calc			@run execute_calc
-	BL main				@loop back to main
+	B main				@loop back to main
 
 
 get_int:
