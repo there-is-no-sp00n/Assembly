@@ -57,13 +57,13 @@ _ADD:
 _SUB:
 	SUB R0, R1, R3
 	MOV R1, LR
-	BL print_calc
+	BL _print_calc
 	MOV PC, R1
 
 _MUL:
 	MUL RO, R1, R3
 	MOV R1, LR
-	BL print_calc
+	BL _print_calc
 	MOV PC, R1
 
 _MAX:
