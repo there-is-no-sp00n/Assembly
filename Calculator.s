@@ -86,8 +86,8 @@ _print_calc:
 
 .data
 
-read_int:	asciz		"%d"
-read_char:	asciz		" "
-out_str:	asciz		"Output: %d"
+read_int:	ascii		"%d"
+read_char:	ascii		" "
+out_str:	ascii		"Output: %d"
 
 .end
