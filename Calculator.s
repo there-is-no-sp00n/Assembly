@@ -16,7 +16,7 @@ main:
 
 get_int:
 		MOV R7, #3
-		MOV R0, #1
+		MOV R0, #0
 		MOV R2, #1
 		LDR R1, = read_int
 		SWI 0
@@ -27,7 +27,7 @@ get_int:
 
 get_char:	
 		MOV R7, #3
-		MOV R0, #1
+		MOV R0, #0
 		MOV R2, #1
 		LDR R1, = read_char
 		SWI 0
