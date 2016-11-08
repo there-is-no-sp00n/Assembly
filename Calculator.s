@@ -15,38 +15,38 @@ main:
 
 
 get_int:
-		MOV R7, #3
-		MOV R0, #0
-		MOV R2, #1
-		LDR R1, = read_int
-		SWI 0
-		LDR R0, [R1]
-		AND R0, #0xFFFF
-		MOV PC, LR
+	MOV R7, #3
+	MOV R0, #0
+	MOV R2, #1
+	LDR R1, = read_int
+	SWI 0
+	LDR R0, [R1]
+	AND R0, #0xFFFF
+	MOV PC, LR
 
 
 get_char:	
-		MOV R7, #3
-		MOV R0, #0
-		MOV R2, #1
-		LDR R1, = read_char
-		SWI 0
-		LDR R0, [R1]
-		AND R0, #0xFF
-		MOV PC, LR
+	MOV R7, #3
+	MOV R0, #0
+	MOV R2, #1
+	LDR R1, = read_char
+	SWI 0
+	LDR R0, [R1]
+	AND R0, #0xFF
+	MOV PC, LR
 
 
 execute_calc:
-		MOV R6, LR
-		CMP R2, #'+'
-		BEQ _ADD
-		CMP R2, #'-'
-		BEQ _SUB
-		CMP R2, #'*'
-		BEQ _MUL
-		CMP R2, #'M'
-		BEQ _MAX
-		MOV PC, R6
+	MOV R6, LR
+	CMP R2, #'+'
+	BEQ _ADD
+	CMP R2, #'-'
+	BEQ _SUB
+	CMP R2, #'*'
+	BEQ _MUL
+	CMP R2, #'M'
+	BEQ _MAX
+	MOV PC, R6
 
 _ADD:
 	ADD R0, R1, R3
@@ -78,16 +78,16 @@ _MAX:
 
 
 _print_calc:
-		MOV R5, LR
-		LDR R0, =out_str
-		BL printf
-		MOV PC, R5
+	MOV R5, LR
+	LDR R0, =out_str
+	BL printf
+	MOV PC, R5
 
 
 .data
 
-read_int:	ascii		"%d"
-read_char:	ascii		" "
-out_str:	ascii		"Output: %d"
+read_int:	ascii	"%d"
+read_char:	ascii	" "
+out_str:	ascii	"Output: %d"
 
 .end
