@@ -70,9 +70,9 @@ _MAX:
 	MOV R0, R1
 	MOV R1, LR
 	CMP R0, R3
-	GT _print_calc
+	BGT _print_calc
 	MOV R0, R3
-	LT _print_calc
+	BLT _print_calc
 	MOV PC, R1
 
 
@@ -84,6 +84,9 @@ _print_calc:
 
 
 .data
+
 read_int:	asciz		"%d"
 read_char:	asciz		" "
 out_str:	asciz		"Output: %d"
+
+.end
