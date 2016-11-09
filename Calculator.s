@@ -63,7 +63,7 @@ _SUB:
 	MOV PC, R1
 
 _MUL:
-	MUL RO, R0, R1
+	MUL R0, R0, R1
 	MOV R1, LR
 	BL _print_calc
 	MOV PC, R1
