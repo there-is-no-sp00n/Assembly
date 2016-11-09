@@ -13,7 +13,7 @@ main:
 	MOV R2, R10			@R2 for char
 	MOV R3, R11			@R3 for last int
 	BL execute_calc			@run execute_calc
-	B main				@loop back to main
+	@B main				@loop back to main
 
 
 get_char:	
@@ -41,38 +41,33 @@ execute_calc:
 
 _ADD:
 	ADD R1, R1, R3
-	MOV R3, LR
 	LDR R0, =out_str
 	BL printf
-	MOV PC, R3
+	B main
 
 _SUB:
-	SUB R0, R1, R2
-	MOV R1, LR
-	BL _print_calc
-	MOV PC, R1
+	SUB R1, R1, R3
+	LDR R0, =out_str
+	BL printf
+	B main
 
 _MUL:
-	MUL R0, R1, R3
-	MOV R1, LR
-	BL _print_calc
-	MOV PC, R1
+	MUL R1, R1, R3
+	LDR R0, =out_str
+	BL printf
+	B main
 
 _MAX:
-	@MOV R0, R1
-	MOV R10, LR
 	CMP R1, R3
 	BGT _print_calc
 	MOV R1, R3
 	BLT _print_calc
-	MOV PC, R10
 
 
 _print_calc:
-	MOV R5, LR
 	LDR R0, =out_str
 	BL printf
-	MOV PC, R5
+	B main
 
 _scanf:
     PUSH {LR}                @ store LR since scanf call overwrites
