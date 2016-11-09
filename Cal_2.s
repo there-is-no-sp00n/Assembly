@@ -13,18 +13,7 @@ main:
 	MOV R2, R10			@R2 for char
 	MOV R3, R11			@R3 for last int
 	BL execute_calc			@run execute_calc
-	@B main				@loop back to main
-
-
-@get_int:
-@	MOV R7, #3
-@	MOV R0, #0
-@	MOV R2, #1
-@	LDR R1, = read_int
-@	SWI 0
-@	LDR R0, [R1]
-@	AND R0, #0xFFFF
-@	MOV PC, LR
+	B main				@loop back to main
 
 
 get_char:	
@@ -55,8 +44,7 @@ _ADD:
 	MOV R3, LR
 	LDR R0, =out_str
 	BL printf
-	@BL _print_calc
-	B main
+	MOV PC, R3
 
 _SUB:
 	SUB R0, R1, R2
@@ -101,6 +89,6 @@ _scanf:
 format_str:     .asciz	"%d"
 read_int:	.ascii	"%d"
 read_char:	.ascii	" "
-out_str:	.ascii	"Output: %d"
+out_str:	.ascii	"Output: %d\n"
 
 .end
