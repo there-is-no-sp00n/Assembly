@@ -47,9 +47,10 @@ _ADD:
 
 _SUB:
 	SUB R1, R1, R3
-	LDR R0, =out_str
-	BL printf
-	B main
+	@LDR R0, =out_str
+	@BL printf
+	BL _print_calc
+	@B main
 
 _MUL:
 	MUL R1, R1, R3
@@ -60,7 +61,7 @@ _MUL:
 _MAX:
 	CMP R1, R3
 	BGT _print_calc
-	@MOV R1, R3
+	MOV R1, R3
 	BLT _print_calc
 
 
