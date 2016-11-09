@@ -16,15 +16,15 @@ main:
 	B main				@loop back to main
 
 
-get_int:
-	MOV R7, #3
-	MOV R0, #0
-	MOV R2, #1
-	LDR R1, = read_int
-	SWI 0
-	LDR R0, [R1]
-	AND R0, #0xFFFF
-	MOV PC, LR
+@get_int:
+@	MOV R7, #3
+@	MOV R0, #0
+@	MOV R2, #1
+@	LDR R1, = read_int
+@	SWI 0
+@	LDR R0, [R1]
+@	AND R0, #0xFFFF
+@	MOV PC, LR
 
 
 get_char:	
