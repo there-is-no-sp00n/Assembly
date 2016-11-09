@@ -7,7 +7,6 @@ main:
 	BL get_char			@ get the char
 	MOV R10, R0			@ back up the char
 	BL _scanf			@ get the last int
-	@MOV R11, R0			@ move all the inputs to R1, R2, R3 to prepare for execute_calc
 	
 	MOV R1, R9			@ R1 for first int
 	MOV R2, R10			@ R2 for char
