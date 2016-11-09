@@ -1,3 +1,8 @@
+@CSE 2312
+@CALCULATOR
+@PROGRAMMING ASSIGNMENT #1
+
+
 .global main
 .func main
 
