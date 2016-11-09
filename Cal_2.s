@@ -28,7 +28,6 @@ get_char:
 
 
 execute_calc:
-	MOV R6, LR
 	CMP R2, #'+'
 	BEQ _ADD
 	CMP R2, #'-'
@@ -37,26 +36,18 @@ execute_calc:
 	BEQ _MUL
 	CMP R2, #'M'
 	BEQ _MAX
-	MOV PC, R6
 
 _ADD:
 	ADD R1, R1, R3
-	LDR R0, =out_str
-	BL printf
-	B main
+	BL _print_calc
 
 _SUB:
 	SUB R1, R1, R3
-	@LDR R0, =out_str
-	@BL printf
 	BL _print_calc
-	@B main
 
 _MUL:
 	MUL R1, R1, R3
-	LDR R0, =out_str
-	BL printf
-	B main
+	BL _print_calc
 
 _MAX:
 	CMP R1, R3
