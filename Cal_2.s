@@ -53,7 +53,9 @@ execute_calc:
 _ADD:
 	ADD R1, R1, R2
 	MOV R3, LR
-	BL _print_calc
+	LDR R0, =out_str
+	BL printf
+	@BL _print_calc
 	MOV PC, R3
 
 _SUB:
