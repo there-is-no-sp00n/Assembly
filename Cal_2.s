@@ -13,7 +13,7 @@ main:
 	MOV R2, R10			@R2 for char
 	MOV R3, R11			@R3 for last int
 	BL execute_calc			@run execute_calc
-	B main				@loop back to main
+	@B main				@loop back to main
 
 
 @get_int:
@@ -51,12 +51,12 @@ execute_calc:
 	MOV PC, R6
 
 _ADD:
-	ADD R1, R1, R2
+	ADD R1, R1, R3
 	MOV R3, LR
 	LDR R0, =out_str
 	BL printf
 	@BL _print_calc
-	MOV PC, R3
+	B main
 
 _SUB:
 	SUB R0, R1, R2
