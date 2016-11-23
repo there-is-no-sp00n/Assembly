@@ -3,12 +3,12 @@
 
 main:
   BL _scanf
-  MOV R8, R0
+  MOV R1, R0
   BL _scanf
-  MOV R9, R0
+  MOV R2, R0
   
-  PUSH {R8}
-  PUSH {R9}
+  PUSH {R1}
+  PUSH {R2}
   
  @BL _mod_unsigned
   
@@ -17,16 +17,17 @@ main:
   @B main
   
 _gcd:
-    CMP R8, R9
-    SUBGT R4, R8, R9
-    SUBLE R4, R9, R8
+    CMP R1, R2
+    SUBGT R1, R1, R2
+    SUBLE R2, R2, R1
     BNE _gcd
-    POPEQ {R9}
-    POPEQ {R8}
+    MOVEQ R3, R2
+    POPEQ {R2}
+    POPEQ {R1}
   
-    MOVEQ R3, R4
-    MOVEQ R1, R8
-    MOVEQ R2, R9
+    
+    //MOVEQ R1, R8
+    //MOVEQ R2, R9
     BEQ _print
 
 _mod_unsigned:
