@@ -18,8 +18,8 @@ main:
   
 _gcd:
     CMP R1, R2
-    SUBGT R1, R1, R2
-    SUBLE R2, R2, R1
+    SUBHS R1, R1, R2
+    SUBLS R2, R2, R1
     BNE _gcd
     MOVEQ R3, R2
     POPEQ {R2}
