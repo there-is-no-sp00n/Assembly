@@ -18,9 +18,15 @@ main:
   
 _gcd:
     CMP R8, R9
-    SUBGT R0, R8, R9
-    SUBLE R0, R9, R8
+    SUBGT R4, R8, R9
+    SUBLE R4, R9, R8
     BNE _gcd
+    POPEQ {R9}
+    POPEQ {R8}
+  
+    MOVEQ R3, R4
+    MOVEQ R1, R8
+    MOVEQ R2, R9
     BEQ _print
 
 _mod_unsigned:
@@ -41,12 +47,7 @@ _mod_unsigned:
  
 _print:
     @MOV R7, LR          @ store LR since printf call overwrites
-    POP {R9}
-    POP {R8}
-  
-    MOV R3, R0
-    MOV R1, R8
-    MOV R2, R9
+    
     LDR R0,=print_str   @ R0 contains formatted string address
     BL printf           @ call printf
     @MOV PC, R7          @ return
