@@ -26,7 +26,7 @@ _cont_mod:
     MOVHS R1, R2            @ still swapping R1 & R2
     MOVHS R2, R0            @ still swapping R1 & R2
 
-    BL _sub_loop_check      @ branch to _sub_loop_check
+    B _sub_loop_check      @ branch to _sub_loop_check
 
 
 
