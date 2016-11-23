@@ -1,7 +1,7 @@
 
 main:
   BL _scanf
-  MOV R1, RO
+  MOV R1, R0
   BL _scanf
   MOV R2, R0
   
