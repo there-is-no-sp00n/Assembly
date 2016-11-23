@@ -18,8 +18,8 @@ main:
   
 _gcd:
     CMP R8, R9
-    SUBGT R8, R8, R9
-    SUBLE R9, R9, R8
+    SUBGT R0, R8, R9
+    SUBLE R0, R9, R8
     BNE _gcd
     BE _print
 
