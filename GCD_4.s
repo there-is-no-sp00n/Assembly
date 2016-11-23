@@ -1,3 +1,7 @@
+@ CSE 2312
+@ GCD CALCULATOR
+@ PROGRAM HOMEWORK 2
+
 .global main
 .func main
 
