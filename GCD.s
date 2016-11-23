@@ -1,3 +1,8 @@
+@ CSE 2312
+@ GCD
+@ Programming Assignment #2
+
+
 .global main
 .func main
 
