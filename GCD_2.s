@@ -57,6 +57,6 @@ _scanf:
 .data
 
 format_str:     .asciz	"%d"
-print_str:  .asciz  "%d mod %d = %d \n"
+print_str:  .asciz  "The GCD of %d and %d is %d \n"
 
 .end
