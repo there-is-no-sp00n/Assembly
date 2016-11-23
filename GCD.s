@@ -21,16 +21,18 @@ main:
     
     
 _cont_mod:
+    LDR R0, =check_str
     CMP R2, R1              @ check to see if R1 < R2
     MOVHS R0, R1            @ if R2 > R1 swap R1 & R2
     MOVHS R1, R2            @ still swapping R1 & R2
     MOVHS R2, R0            @ still swapping R1 & R2
 
-    B _sub_loop_check      @ branch to _sub_loop_check
+    BL _sub_loop_check      @ branch to _sub_loop_check
 
 
 
 _sub_loop_check:
+    LDR R0, =check_str
     CMP R1, R2			@ see if R1 > R2
     BLT _sub_loop		@ branch to _sub_loop if R1 > R2
     BEQ _its_equal		@ branch to _its_equal if R1 == R2
@@ -42,18 +44,21 @@ _sub_loop_check:
     
     
 _sub_loop:
+    LDR R0, =check_str
     SUB R1, R1, R2		@ subtract R2 from R1
     BL _sub_loop_check		@ branch back to _sub_loop_check
     
     
 _its_equal:
+    LDR R0, =check_str
     MOV R3, R1			@ move the GCD to R3
     POP {R2}			@ pop back R2 from stack
     POP {R1}			@ pop back R1 from stack
     BL _print_gcd		@ branch to _print_gcd
     
 
-_print_gcd:			
+_print_gcd:	
+    LDR R0, =check_str
     LDR R0, = print_gcd		@ load the output string to R0
     BL printf			@ call on printf
     B main			@ unconditional branch back to main
@@ -73,5 +78,6 @@ _scanf:
 
 print_gcd:	.ascii		"GCD of %d and %d is %d \n"
 format_str:     .asciz      "%d"
+check_str: .ascii       "OKAY\n"
 
 .end
