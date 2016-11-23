@@ -26,8 +26,8 @@ _gcd:
     POPEQ {R1}
   
     
-    //MOVEQ R1, R8
-    //MOVEQ R2, R9
+    @MOVEQ R1, R8
+    @MOVEQ R2, R9
     BEQ _print
 
 _mod_unsigned:
