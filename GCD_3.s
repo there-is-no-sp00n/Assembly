@@ -19,7 +19,7 @@ main:
 _gcd:
   CMP R1, R2
   BEQ _print
-  BLT less
+  BLT _less
   SUB R1, R1, R2
   B _gcd
 
