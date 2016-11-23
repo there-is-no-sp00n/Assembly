@@ -12,8 +12,10 @@ main:
     MOV R1, R0			@ move to R1
     BL _scanf			@ get the second int
     MOV R2, R0			@ move to R2
-    PUSH {R1}           	@ back up R1 to stack
-    PUSH {R2}           	@ back up R2 to stack
+    ADD R8, R1, #0
+    ADD R9, R2, #0
+    PUSH {R8}           	@ back up R1 to stack
+    PUSH {R9}           	@ back up R2 to stack
     BL _cont_mod        	@ branch to _cont_mod
     
     
@@ -23,7 +25,7 @@ _cont_mod:
     MOVHS R0, R1            @ if R2 > R1 swap R1 & R2
     MOVHS R1, R2            @ still swapping R1 & R2
     MOVHS R2, R0            @ still swapping R1 & R2
-    MOV R0, #0		    @ initia
+
     BL _sub_loop_check      @ branch to _sub_loop_check
 
 
