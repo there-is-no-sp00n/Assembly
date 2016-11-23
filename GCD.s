@@ -4,12 +4,12 @@
 
 main:
     BL _scanf			@ get the int
-	MOV R1, R0			@ move to R1
+    MOV R1, R0			@ move to R1
     BL _scanf			@ get the second int
-	MOV R2, R0			@ move to R2
-    PUSH {R1}           @ back up R1 to stack
-    PUSH {R2}           @ back up R2 to stack
-    BL _cont_mod        @ branch to _cont_mod
+    MOV R2, R0			@ move to R2
+    PUSH {R1}           	@ back up R1 to stack
+    PUSH {R2}           	@ back up R2 to stack
+    BL _cont_mod        	@ branch to _cont_mod
     
     
     
@@ -18,37 +18,38 @@ _cont_mod:
     MOVHS R0, R1            @ if R2 > R1 swap R1 & R2
     MOVHS R1, R2            @ still swapping R1 & R2
     MOVHS R2, R0            @ still swapping R1 & R2
-    MOV R0, #0
+    MOV R0, #0		    @ initia
     BL _sub_loop_check      @ branch to _sub_loop_check
 
 
+
 _sub_loop_check:
-    CMP R1, R2
-    BLT _sub_loop
-    BEQ _its_equal
-    MOVHS R0, R1
-    MOVHS R1, R2
-    MOVHS R2, R0
-    CMP R1, R2
-    BLT _sub_loop
+    CMP R1, R2			@ see if R1 > R2
+    BLT _sub_loop		@ branch to _sub_loop if R1 > R2
+    BEQ _its_equal		@ branch to _its_equal if R1 == R2
+    MOVHS R0, R1		@ if R2 > R1 swap
+    MOVHS R1, R2		@ still swapping
+    MOVHS R2, R0		@ still swapping
+    CMP R1, R2			@ see if R1 > R2
+    BLT _sub_loop		@ branch to _sub_loop if R1 > R2
     
     
 _sub_loop:
-    SUB R1, R1, R2
-    BL _sub_loop_check
+    SUB R1, R1, R2		@ subtract R2 from R1
+    BL _sub_loop_check		@ branch back to _sub_loop_check
     
     
 _its_equal:
-    MOV R3, R1
-    POP {R2}
-    POP {R1}
-    BL _print_gcd
+    MOV R3, R1			@ move the GCD to R3
+    POP {R2}			@ pop back R2 from stack
+    POP {R1}			@ pop back R1 from stack
+    BL _print_gcd		@ branch to _print_gcd
     
 
-_print_gcd:
-    LDR R0, = print_gcd
-    BL printf
-    B main
+_print_gcd:			
+    LDR R0, = print_gcd		@ load the output string to R0
+    BL printf			@ call on printf
+    B main			@ unconditional branch back to main
     
 
 _scanf:
@@ -63,7 +64,7 @@ _scanf:
 
 .data
 
-print_gcd:	.asciii		"GCD of %d and %d is %d"
+print_gcd:	.asciii		"GCD of %d and %d is %d \n"
 format_str:     .asciz      "%d"
 
 .end
