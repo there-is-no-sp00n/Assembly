@@ -12,6 +12,10 @@ main:
   
   BL _mod_unsigned
   BL _mod_unsigned
+  BL _mod_unsigned
+  BL _mod_unsigned
+  BL _mod_unsigned
+  
   POP {R9}
   POP {R8}
   
@@ -19,7 +23,7 @@ main:
   MOV R1, R8
   MOV R2, R9
   
-  BL _print
+  @BL _print
   B main
 
 _mod_unsigned:
@@ -43,10 +47,11 @@ _mod_unsigned:
     MOV PC, LR          @ return
  
 _print:
-    MOV R7, LR          @ store LR since printf call overwrites
+    @MOV R7, LR          @ store LR since printf call overwrites
     LDR R0,=print_str   @ R0 contains formatted string address
     BL printf           @ call printf
-    MOV PC, R7          @ return
+    @MOV PC, R7          @ return
+    B main
     
     
 _scanf:
