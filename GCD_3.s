@@ -21,7 +21,7 @@ _gcd:
     SUBGT R0, R8, R9
     SUBLE R0, R9, R8
     BNE _gcd
-    BE _print
+    BEQ _print
 
 _mod_unsigned:
     cmp R9, R8          @ check to see if R1 >= R2
