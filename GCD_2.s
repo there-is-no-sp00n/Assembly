@@ -19,6 +19,7 @@ main:
   MOV R2, R9
   
   BL _print
+  B main
 
 _mod_unsigned:
     cmp R9, R8          @ check to see if R1 >= R2
