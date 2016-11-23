@@ -69,7 +69,7 @@ _scanf:
 
 .data
 
-print_gcd:	.asciii		"GCD of %d and %d is %d \n"
+print_gcd:	.ascii		"GCD of %d and %d is %d \n"
 format_str:     .asciz      "%d"
 
 .end
