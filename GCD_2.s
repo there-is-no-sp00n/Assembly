@@ -33,7 +33,7 @@ _mod_unsigned:
     _modloopcheck:
         CMP R8, R9      @ check for loop termination
         BHS _modloop    @ continue loop if R1 >= R2
-    MOV R0, R4          @ move remainder to R0
+    MOV R0, R8          @ move remainder to R0
     MOV PC, LR          @ return
  
 _print:
