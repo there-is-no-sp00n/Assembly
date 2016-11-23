@@ -46,7 +46,8 @@ _sub_loop_check:
 _sub_loop:
     @LDR R0, =check_str
     SUB R1, R1, R2		@ subtract R2 from R1
-    BL _sub_loop_check		@ branch back to _sub_loop_check
+    @BL _sub_loop_check		@ branch back to _sub_loop_check
+    MOV PC, LR
     
     
 _its_equal:
