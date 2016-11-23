@@ -12,11 +12,11 @@ main:
     MOV R1, R0			@ move to R1
     BL _scanf			@ get the second int
     MOV R2, R0			@ move to R2
-    ADD R8, R1, #0
-    ADD R9, R2, #0
+   @ ADD R8, R1, #0
+   @ ADD R9, R2, #0
     PUSH {R1}           	@ back up R1 to stack
     PUSH {R2}           	@ back up R2 to stack
-    BL _cont_mod        	@ branch to _cont_mod
+    B _cont_mod        	@ branch to _cont_mod
     
     
     
@@ -52,9 +52,9 @@ _sub_loop:
     
 _its_equal:
     @LDR R0, =check_str
-    MOV R3, R1			@ move the GCD to R3
-    POP {R2}			@ pop back R2 from stack
-    POP {R1}			@ pop back R1 from stack
+    MOV R2, R1			@ move the GCD to R3
+    POP {R1}			@ pop back R2 from stack
+    POP {R3}			@ pop back R1 from stack
     BL _print_gcd		@ branch to _print_gcd
     
 
