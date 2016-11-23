@@ -52,9 +52,9 @@ _sub_loop:
     
 _its_equal:
     @LDR R0, =check_str
-    MOV R2, R1			@ move the GCD to R3
+    MOV R3, R2			@ move the GCD to R3
     POP {R1}			@ pop back R2 from stack
-    POP {R3}			@ pop back R1 from stack
+    POP {R2}			@ pop back R1 from stack
     BL _print_gcd		@ branch to _print_gcd
     
 
