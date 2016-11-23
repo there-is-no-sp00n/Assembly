@@ -1,3 +1,5 @@
+.global main
+.func main
 
 main:
   BL _scanf
