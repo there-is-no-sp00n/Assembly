@@ -1,4 +1,4 @@
-.global main
+global main
 .func main
 
 main:
@@ -10,6 +10,7 @@ main:
   PUSH {R8}
   PUSH {R9}
   
+  BL _mod_unsigned
   BL _mod_unsigned
   POP {R9}
   POP {R8}
@@ -33,8 +34,11 @@ _mod_unsigned:
         SUB R8, R8, R9  @ subtract R2 from R1
     _modloopcheck:
         CMP R8, R9      @ check for loop termination
+        MOVEQ R3, R8
+        POPEQ {R2}
+        POPEQ {R1}
+        BEQ _print
         BHS _modloop    @ continue loop if R1 >= R2
-        BNE _mod_unsigned
     MOV R0, R8          @ move remainder to R0
     MOV PC, LR          @ return
  
