@@ -14,8 +14,8 @@ main:
     MOV R2, R0			@ move to R2
     ADD R8, R1, #0
     ADD R9, R2, #0
-    PUSH {R8}           	@ back up R1 to stack
-    PUSH {R9}           	@ back up R2 to stack
+    PUSH {R1}           	@ back up R1 to stack
+    PUSH {R2}           	@ back up R2 to stack
     BL _cont_mod        	@ branch to _cont_mod
     
     
