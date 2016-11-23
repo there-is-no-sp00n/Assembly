@@ -18,8 +18,12 @@ main:
   
 _gcd:
     CMP R1, R2
-    SUBHS R1, R1, R2
-    SUBLS R2, R2, R1
+    SUBGT R1, R1, R2
+    CMP R2, R1
+    MOVHS R0, R1        @ swap R1 and R2 if R2 > R1
+    MOVHS R1, R2        @ swap R1 and R2 if R2 > R1
+    MOVHS R2, R0        @ swap R1 and R2 if R2 > R1
+    @SUBLS R2, R2, R1
     BNE _gcd
     MOVEQ R3, R2
     POPEQ {R2}
