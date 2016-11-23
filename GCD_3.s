@@ -17,22 +17,15 @@ main:
   @B main
   
 _gcd:
-    CMP R1, R2
-    SUBGT R1, R1, R2
-    CMP R2, R1
-    MOVHS R0, R1        @ swap R1 and R2 if R2 > R1
-    MOVHS R1, R2        @ swap R1 and R2 if R2 > R1
-    MOVHS R2, R0        @ swap R1 and R2 if R2 > R1
-    @SUBLS R2, R2, R1
-    BNE _gcd
-    MOVEQ R3, R2
-    POPEQ {R2}
-    POPEQ {R1}
-  
-    
-    @MOVEQ R1, R8
-    @MOVEQ R2, R9
-    BEQ _print
+  CMP R1, R2
+  BEQ _print
+  BLT less
+  SUB R1, R1, R2
+  B _gcd
+
+_less:
+  SUB R2,R2,R1
+  B _gcd
 
 _mod_unsigned:
     cmp R9, R8          @ check to see if R1 >= R2
@@ -55,6 +48,7 @@ _print:
     
     LDR R0,=print_str   @ R0 contains formatted string address
     BL printf           @ call printf
+    b main
     @MOV PC, R7          @ return
     
     
