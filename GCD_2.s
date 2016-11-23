@@ -3,41 +3,44 @@
 
 main:
   BL _scanf
-  MOV R1, R0
+  MOV R8, R0
   BL _scanf
-  MOV R2, R0
+  MOV R9, R0
   
-  PUSH {R1}
-  PUSH {R2}
+  PUSH {R8}
+  PUSH {R9}
   
   BL _mod_unsigned
-  POP {R2}
-  POP {R1}
+  POP {R9}
+  POP {R8}
+  
   MOV R3, R0
+  MOV R1, R8
+  MOV R2, R9
   
   BL _print
 
 _mod_unsigned:
-    cmp R2, R1          @ check to see if R1 >= R2
-    MOVHS R0, R1        @ swap R1 and R2 if R2 > R1
-    MOVHS R1, R2        @ swap R1 and R2 if R2 > R1
-    MOVHS R2, R0        @ swap R1 and R2 if R2 > R1
+    cmp R9, R8          @ check to see if R1 >= R2
+    MOVHS R0, R8        @ swap R1 and R2 if R2 > R1
+    MOVHS R8, R9        @ swap R1 and R2 if R2 > R1
+    MOVHS R9, R0        @ swap R1 and R2 if R2 > R1
     MOV R0, #0          @ initialize return value
     B _modloopcheck     @ check to see if
     _modloop:
         ADD R0, R0, #1  @ increment R0
-        SUB R1, R1, R2  @ subtract R2 from R1
+        SUB R8, R8, R9  @ subtract R2 from R1
     _modloopcheck:
-        CMP R1, R2      @ check for loop termination
+        CMP R8, R9      @ check for loop termination
         BHS _modloop    @ continue loop if R1 >= R2
-    MOV R0, R1          @ move remainder to R0
+    MOV R0, R4          @ move remainder to R0
     MOV PC, LR          @ return
  
 _print:
-    MOV R4, LR          @ store LR since printf call overwrites
+    MOV R7, LR          @ store LR since printf call overwrites
     LDR R0,=print_str   @ R0 contains formatted string address
     BL printf           @ call printf
-    MOV PC, R4          @ return
+    MOV PC, R7          @ return
     
     
 _scanf:
