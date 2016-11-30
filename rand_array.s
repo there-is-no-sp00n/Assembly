@@ -69,5 +69,5 @@ _getrand:
 .data
 
 .balign 4
-a:              .skip       400
+a:              .skip       40
 printf_str:     .asciz      "a[%d] = %d\n"
