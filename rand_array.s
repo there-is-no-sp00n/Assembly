@@ -12,7 +12,7 @@ main:
 
 writeloop:
     CMP R0, #10            @ check to see if we are done iterating
-   @ BEQ writedone           @ exit loop if done
+    BEQ writedone           @ exit loop if done
     LDR R1, =a              @ get address of a
     LSL R2, R0, #2          @ multiply index*4 to get array offset
     ADD R2, R1, R2          @ R2 now has the element address
@@ -30,7 +30,7 @@ writedone:
 
 readloop:
     CMP R0, #10            @ check to see if we are done iterating
-    BEQ readdone            @ exit loop if done
+    @BEQ readdone            @ exit loop if done
     LDR R1, =a              @ get address of a
     LSL R2, R0, #2          @ multiply index*4 to get array offset
     ADD R2, R1, R2          @ R2 now has the element address
