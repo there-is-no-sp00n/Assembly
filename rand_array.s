@@ -70,17 +70,15 @@ _seedrand:
     MOV R0, #0              @ pass 0 as argument to time call
     BL time                 @ get system time
     MOV R1, R0              @ pass sytem time as argument to srand
-   @ BL _mod_unsigned
-   @ MOV R1, R0
     BL srand                @ seed the random number generator
     POP {PC}                @ return 
     
 _getrand:
     PUSH {LR}               @ backup return address
-    MOV R1, RO
+    BL rand                 @ get a random number
+    MOV R1, R0
     MOV R2, #1000
     BL _mod_unsigned
-    BL rand                 @ get a random number
     POP {PC}                @ return 
     
 
