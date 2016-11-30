@@ -83,3 +83,6 @@ _getrand:
 .balign 4
 a:              .skip       40
 printf_str:     .asciz      "a[%d] = %d\n"
+exit_str:       .ascii      "Terminating program.\n"
+
+.end
