@@ -71,6 +71,7 @@ _seedrand:
     BL time                 @ get system time
     MOV R1, R0              @ pass sytem time as argument to srand
     BL _mod_unsigned
+    MOV R1, R0
     BL srand                @ seed the random number generator
     POP {PC}                @ return 
     
