@@ -1,0 +1,8 @@
+@ CSE 2312
+@ RANDOM ARRAY SEARCH
+@ PROGRAMMING HOMEWORK 3
+
+
+.global main
+.func main
+
