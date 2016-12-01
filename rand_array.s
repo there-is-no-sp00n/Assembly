@@ -64,6 +64,7 @@ get_max:
     LDR R1, [R2]
     CMP R1, R3
     MOVHS R3, R1
+    ADD R0, R0, #1
     B get_max
 
 _exit:  
@@ -78,6 +79,7 @@ _exit:
 _print_max:
     LDR R0, =print_max
     BL printf
+    B _exit
     
 
 _printf:
