@@ -88,25 +88,24 @@ get_min:
     B get_min               @ loop back up
 
 min_done:
-    @MOV R0, #0
-    BL _scanf
-    MOV R3, R0
-    MOV R0, #0
-    BL _search
+    BL _scanf               @ run use this function to get search value
+    MOV R3, R0              @ move the return value to R3
+    MOV R0, #0              @ initialize the index
+    BL _search              @ branch to _search
 
 _search:
-    CMP R0, #10
-    MOVEQ R1, #-1
-    BEQ print_search
-    LDR R1, =a
-    LSL R2, R0, #2
-    ADD R2, R1, R2
-    LDR R1, [R2]
-    CMP R3, R1
-    MOVEQ R1, R0
-    BEQ print_search
-    ADD R0, R0, #1
-    B _search
+    CMP R0, #10             @ check to see if at the end of the iteration
+    MOVEQ R1, #-1           @ if here meaning no values found, print "-1"
+    BEQ print_search        @ branch to print_search
+    LDR R1, =a              @ load the starting address of the array to R1
+    LSL R2, R0, #2          @ get the offset
+    ADD R2, R1, R2          @ go to the offset
+    LDR R1, [R2]            @ dereference the offset into R1
+    CMP R3, R1              @ compare to see if the value is found
+    MOVEQ R1, R0            @ if the values are equal load the iterator (R0) into R1
+    BEQ print_search        @ branch to print_search
+    ADD R0, R0, #1          @ increment the iterator
+    B _search               @ loop back up
     
 
 _exit:  
@@ -126,12 +125,12 @@ _print_max:
 _print_min:
     LDR R0, =print_min      @ load the print_min string to R0
     BL printf               @ call on printf
-    B min_done                 
+    B min_done              @ branch to min_done   
 
 print_search:
-    LDR R0, =search_str
-    BL printf
-    B min_done
+    LDR R0, =search_str     @ load the search_str string to R0
+    BL printf               @ call on printf
+    B min_done              @ branch to min_done
 
 _printf:
     PUSH {LR}               @ store the return address
@@ -175,8 +174,8 @@ _mod_unsigned:
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
-    LDR R0, =prompt_str
-    BL printf
+    LDR R0, =prompt_str     @ load the prompt_str string to R0
+    BL printf               @ call on printf
     LDR R0, =get_search     @ R0 contains address of format string
     MOV R1, SP              @ move SP to R1 to store entry on stack
     BL scanf                @ call scanf
@@ -196,4 +195,5 @@ print_min:      .asciz      "The min is %d. \n"
 get_search:     .asciz      "%d"
 search_str:     .asciz      "Index: %d\n"
 prompt_str:     .asciz      "Enter search value: "
+
 .end
