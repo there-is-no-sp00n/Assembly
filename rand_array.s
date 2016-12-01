@@ -154,5 +154,6 @@ printf_str:     .asciz      "a[%d] = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
 print_max:      .asciz      "The max is %d. \n"
 print_min:      .asciz      "The min is %d. \n"
+get_search:     .asciz      "Enter search value: %d\n"
 
 .end
