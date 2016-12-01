@@ -87,6 +87,27 @@ get_min:
     ADD R0, R0, #1          @ increment the index
     B get_min               @ loop back up
 
+min_done:
+    MOV R0, #0
+    BL _scanf
+    MOV R3, R0
+    BL _search
+
+_search:
+    CMP R0, #10
+    MOVEQ R1, #-1
+    BEQ _print_search
+    LDR R1, =a
+    LSL R2, R0, #2
+    ADD R2, R1, R2
+    LDR R1, [R2]
+    CMP R3, R1
+    MOVEQ R1, R0
+    BEQ print_search
+    ADD R0, R0, #1
+    B _search
+    
+
 _exit:  
     MOV R7, #4              @ write syscall, 4
     MOV R0, #1              @ output stream to monitor, 1
@@ -104,8 +125,12 @@ _print_max:
 _print_min:
     LDR R0, =print_min      @ load the print_min string to R0
     BL printf               @ call on printf
-    B _exit                 
-    
+    B min_done                 
+
+print_search:
+    LDR R0, =search_str
+    BL printf
+    B min_done
 
 _printf:
     PUSH {LR}               @ store the return address
@@ -146,6 +171,17 @@ _mod_unsigned:
     MOV R0, R1          @ move remainder to R0
     MOV PC, LR 
    
+_scanf:
+    PUSH {LR}               @ store LR since scanf call overwrites
+    SUB SP, SP, #4          @ make room on stack
+    LDR R0, =get_search     @ R0 contains address of format string
+    MOV R1, SP              @ move SP to R1 to store entry on stack
+    BL scanf                @ call scanf
+    LDR R0, [SP]            @ load value at SP into R0
+    ADD SP, SP, #4          @ restore the stack pointer
+    POP {PC}                @ return
+
+
 .data
 
 .balign 4
@@ -155,5 +191,6 @@ exit_str:       .ascii      "Terminating program.\n"
 print_max:      .asciz      "The max is %d. \n"
 print_min:      .asciz      "The min is %d. \n"
 get_search:     .asciz      "Enter search value: %d\n"
+search_str:     .asciz      "Index: %d\n"
 
 .end
