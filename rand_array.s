@@ -48,24 +48,44 @@ readloop:
     B   readloop            @ branch to next loop iteration
     
 readdone:
-    @B _exit                 @ exit if done
+    MOV R0, #0              @ initialize the index for get_max
+    LDR R1, =a              @ starting address of array
+    LDR R3, [R1]            @ dereference the starting value of the array into R3
+    BL get_max              @ branch to get_max
+
+get_max:
+    CMP R0, #10             @ check to see if done iterating through all the items
+    MOVEQ R1, R3            @ if so, move the max (R3) to R1 for printf
+    BEQ _print_max          @ branch to _print_max
+    LDR R1, =a              @ load the starting address of the array
+    LSL R2, R0, #2          @ this is the offset
+    ADD R2, R1, R2          @ go to the offset
+    LDR R1, [R2]            @ dereference the offset into R1
+    CMP R1, R3              @ compare R1 and R3
+    MOVHS R3, R1            @ if R1 > R3, move R1 to R3
+    ADD R0, R0, #1          @ increment the index
+    B get_max               @ loop back up
+    
+    
+max_done:
     MOV R0, #0
     LDR R1, =a
     LDR R3, [R1]
-    BL get_max
-
-get_max:
+    BL get_min
+    
+    
+get_min:
     CMP R0, #10
     MOVEQ R1, R3
-    BEQ _print_max
+    BEQ _print_min
     LDR R1, =a
     LSL R2, R0, #2
     ADD R2, R1, R2
     LDR R1, [R2]
     CMP R1, R3
-    MOVHS R3, R1
+    MOVLS R3, R1
     ADD R0, R0, #1
-    B get_max
+    B get_min
 
 _exit:  
     MOV R7, #4              @ write syscall, 4
@@ -77,7 +97,12 @@ _exit:
     SWI 0                   @ execute syscall
     
 _print_max:
-    LDR R0, =print_max
+    LDR R0, =print_max      @ load the print_max string to R0
+    BL printf               @ call on printf
+    B max_done
+    
+_print_min:
+    LDR R0, =print_min
     BL printf
     B _exit
     
@@ -128,5 +153,6 @@ a:              .skip       40
 printf_str:     .asciz      "a[%d] = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
 print_max:      .asciz      "The max is %d. \n"
+print_min:      .asciz      "The min is %d. \n"
 
 .end
