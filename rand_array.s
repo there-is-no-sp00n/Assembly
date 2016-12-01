@@ -175,6 +175,8 @@ _mod_unsigned:
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
     SUB SP, SP, #4          @ make room on stack
+    LDR R0, =prompt_str
+    BL printf
     LDR R0, =get_search     @ R0 contains address of format string
     MOV R1, SP              @ move SP to R1 to store entry on stack
     BL scanf                @ call scanf
@@ -191,7 +193,7 @@ printf_str:     .asciz      "a[%d] = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
 print_max:      .asciz      "The max is %d. \n"
 print_min:      .asciz      "The min is %d. \n"
-get_search:     .asciz      "Enter search value: %d\n"
+get_search:     .asciz      "%d"
 search_str:     .asciz      "Index: %d\n"
-
+prompt_str:     .asciz      "Enter search value: "
 .end
