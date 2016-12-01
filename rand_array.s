@@ -68,24 +68,24 @@ get_max:
     
     
 max_done:
-    MOV R0, #0
-    LDR R1, =a
-    LDR R3, [R1]
-    BL get_min
+    MOV R0, #0              @ initialize the index of the array
+    LDR R1, =a              @ load the starting address of the array
+    LDR R3, [R1]            @ dereference the starting address of the array to R3
+    BL get_min              @ branch to get_min
     
     
 get_min:
-    CMP R0, #10
-    MOVEQ R1, R3
-    BEQ _print_min
-    LDR R1, =a
-    LSL R2, R0, #2
-    ADD R2, R1, R2
-    LDR R1, [R2]
-    CMP R1, R3
-    MOVLS R3, R1
-    ADD R0, R0, #1
-    B get_min
+    CMP R0, #10             @ check to see if done iterating through the loop
+    MOVEQ R1, R3            @ if so, prepare R1 for printf
+    BEQ _print_min          @ branch to print_min
+    LDR R1, =a              @ load the starting address of the array to R1
+    LSL R2, R0, #2          @ get the offset
+    ADD R2, R1, R2          @ go to the offset
+    LDR R1, [R2]            @ dereference the offset into R1
+    CMP R1, R3              @ compare R1 and R3
+    MOVLS R3, R1            @ if R1 < R3, move R1 to R3
+    ADD R0, R0, #1          @ increment the index
+    B get_min               @ loop back up
 
 _exit:  
     MOV R7, #4              @ write syscall, 4
@@ -99,12 +99,12 @@ _exit:
 _print_max:
     LDR R0, =print_max      @ load the print_max string to R0
     BL printf               @ call on printf
-    B max_done
+    B max_done              @ branch to max_done to initialize the min value computation
     
 _print_min:
-    LDR R0, =print_min
-    BL printf
-    B _exit
+    LDR R0, =print_min      @ load the print_min string to R0
+    BL printf               @ call on printf
+    B _exit                 
     
 
 _printf:
@@ -124,9 +124,9 @@ _seedrand:
 _getrand:
     PUSH {LR}               @ backup return address
     BL rand                 @ get a random number
-    MOV R1, R0
-    MOV R2, #1000
-    BL _mod_unsigned
+    MOV R1, R0              @ give R1 the random number
+    MOV R2, #1000           @ give R2 1000 to mod with
+    BL _mod_unsigned        @ branch to _mod_unsigned
     POP {PC}                @ return 
     
 
