@@ -48,8 +48,24 @@ readloop:
     B   readloop            @ branch to next loop iteration
     
 readdone:
-    B _exit                 @ exit if done
-    
+    @B _exit                 @ exit if done
+    MOV R0, #0
+    LDR R1, =a
+    LDR R3, [R1]
+    BL get_max
+
+get_max:
+    CMP R0, #10
+    MOVEQ R1, R3
+    BLEQ print_max
+    LDR R1, =a
+    LSL R2, R0, #2
+    ADD R2, R1, R2
+    LDR R1, [R2]
+    CMP R1, R3
+    MOVHS R3, R1
+    B get_max
+
 _exit:  
     MOV R7, #4              @ write syscall, 4
     MOV R0, #1              @ output stream to monitor, 1
@@ -58,6 +74,11 @@ _exit:
     SWI 0                   @ execute syscall
     MOV R7, #1              @ terminate syscall, 1
     SWI 0                   @ execute syscall
+    
+print_max:
+    LDR R0, =print_max
+    BL printf
+    
 
 _printf:
     PUSH {LR}               @ store the return address
@@ -104,5 +125,6 @@ _mod_unsigned:
 a:              .skip       40
 printf_str:     .asciz      "a[%d] = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
+print_max       .asciz      "The max is %d. \n"
 
 .end
