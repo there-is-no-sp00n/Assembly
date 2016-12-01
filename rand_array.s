@@ -125,6 +125,6 @@ _mod_unsigned:
 a:              .skip       40
 printf_str:     .asciz      "a[%d] = %d\n"
 exit_str:       .ascii      "Terminating program.\n"
-print_max       .asciz      "The max is %d. \n"
+print_max:      .asciz      "The max is %d. \n"
 
 .end
