@@ -88,9 +88,10 @@ get_min:
     B get_min               @ loop back up
 
 min_done:
-    MOV R0, #0
+    @MOV R0, #0
     BL _scanf
     MOV R3, R0
+    MOV R0, #0
     BL _search
 
 _search:
