@@ -57,7 +57,7 @@ readdone:
 get_max:
     CMP R0, #10
     MOVEQ R1, R3
-    BLEQ print_max
+    BLEQ _print_max
     LDR R1, =a
     LSL R2, R0, #2
     ADD R2, R1, R2
@@ -75,7 +75,7 @@ _exit:
     MOV R7, #1              @ terminate syscall, 1
     SWI 0                   @ execute syscall
     
-print_max:
+_print_max:
     LDR R0, =print_max
     BL printf
     
