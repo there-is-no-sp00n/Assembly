@@ -96,7 +96,7 @@ min_done:
 _search:
     CMP R0, #10
     MOVEQ R1, #-1
-    BEQ _print_search
+    BEQ print_search
     LDR R1, =a
     LSL R2, R0, #2
     ADD R2, R1, R2
