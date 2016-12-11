@@ -27,8 +27,8 @@ _where_to_go:
 	@BEQ _inverse
 
 _abs:
-    VMOV S1, R1             @ move return value R0 to FPU register S0
-    VABS.F32 S0, S1
+    VMOV S0, R1             @ move return value R0 to FPU register S0
+    VABS.F32 S0, S0
     VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
     VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     @VMOV R1, S0
