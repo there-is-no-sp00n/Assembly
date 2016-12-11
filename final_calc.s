@@ -65,28 +65,29 @@ _pow:
 	VMOV S0, R1			@ move to S0
 	VMOV S1, R1
 	MOV R0, #0			@ initialize the iterator
-	BL loop_check			@ unconditional branch to loop_check
+	B loop_check			@ unconditional branch to loop_check
+	@CMP R3, #1
 	pow_loop:
 		VMUL.F32 S1, S1, S0
 		@MUL R4, R1, R1
 		ADD R0, R0, #1
 	loop_check:
 		CMP R3, R0
-		BNE pow_loop
-		@BEQ lop_done	
+		BHS pow_loop
+		BEQ lop_done	
 		
 	
 	@B pow_loop
+	
+	
+lop_done:
 	LDR R0, =pow_str
 	BL printf
-	VMOV S0, R4
-	VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+	@VMOV S0, R1
+	VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
     	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
 	BL _printf
 	B main
-	
-@lop_done:
-	
 	
 
 _inverse:
