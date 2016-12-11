@@ -33,7 +33,7 @@ execute_calc:
 	CMP R2, #'p'
 	BEQ _pow
 	CMP R2, #'i'
-	@BEQ _inverse
+	BEQ _inverse
 
 _abs:
     LDR R0, =abs_str
@@ -72,6 +72,23 @@ lop:
 	VMUL.F32 S0, S0, S0
 	SUB R3, R3, #1
 	B lop
+	
+
+_inverse:
+	POP {R1}
+	VMOV S0, R1
+	MOV R5, #1
+	VMOV S1, R5
+	
+	VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
+    	VCVT.F32.U32 S1, S1     @ convert unsigned bit representation to single float
+	
+	VDIV.F32 S2, S0, S1     @ compute S2 = S0 * S1
+    
+    	VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
+    	VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
+	BL _printf
+	B main
 	
     
 _printf:
