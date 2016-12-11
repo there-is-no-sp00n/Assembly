@@ -9,7 +9,7 @@
 main:
     BL _scanf
     @MOV R1, R0
-    PUSH {R1}
+    PUSH {R0}
     BL get_char
     POP {R1}
     MOV R2, R0
