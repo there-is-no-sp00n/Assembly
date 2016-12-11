@@ -26,9 +26,18 @@ _where_to_go:
 _abs:
     VMOV S1, R1             @ move return value R0 to FPU register S0
     VABS.F32 S0, S1
-    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
-    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+    @VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+    @VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+    @VMOV R1, S0
     BL _printf
+    
+_sqr_root:
+	VMOV S1, R1
+	VSQRT.F32 S0, S1
+	VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+    	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+	BL _printf
+	
     
 _printf:
 	LDR R0, =output_str
