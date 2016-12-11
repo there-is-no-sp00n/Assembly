@@ -62,16 +62,16 @@ _pow:
 	MOV R3, R0
 	POP {R1}
 	VMOV S0, R1
-	loop:
-		CMP R3, #1
-		VCVTEQ.F64.F32 D1, S0     @ covert the result to double precision for printing
-    		VMOVEQ R1, R2, D1         @ split the double VFP register into two ARM registers
-		BEQ _printf
-		B main
+loop:
+	CMP R3, #1
+	VCVTEQ.F64.F32 D1, S0     @ covert the result to double precision for printing
+    	VMOVEQ R1, R2, D1         @ split the double VFP register into two ARM registers
+	BEQ _printf
+	B main
 		
-		VMUL.F32 S0, S0, S0
-		SUB R3, R3, #1
-		B loop
+	VMUL.F32 S0, S0, S0
+	SUB R3, R3, #1
+	B loop
 	
     
 _printf:
