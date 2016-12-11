@@ -48,6 +48,7 @@ _abs:
     VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     @VMOV R1, S0
     BL _printf
+    B main
     
 _sqr_root:
 	VMOV S1, R1
