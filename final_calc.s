@@ -13,7 +13,7 @@ main:
     BL get_char
     POP {R1}
     MOV R2, R0
-    BL _iprint
+    @BL _iprint
     BL _where_to_go
     
 _where_to_go:
@@ -29,8 +29,8 @@ _where_to_go:
 _abs:
     VMOV S1, R1             @ move return value R0 to FPU register S0
     VABS.F32 S0, S1
-    @VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
-    @VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     @VMOV R1, S0
     BL _printf
     
@@ -47,14 +47,14 @@ _printf:
 	BL printf
 	B main
 
-_iprint:
-	PUSH {LR}
-	LDR R0, =output_str
-	VMOV S0, R1             @ move return value R0 to FPU register S0
-    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
-    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
-	BL printf
-	POP {PC}
+@_iprint:
+@	PUSH {LR}
+@	LDR R0, =output_str
+@	VMOV S0, R1             @ move return value R0 to FPU register S0
+ @   VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+  @  VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+@	BL printf
+@	POP {PC}
 
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
