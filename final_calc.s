@@ -17,7 +17,7 @@ _where_to_go:
 	CMP R2, #'a'
 	BEQ _abs
 	CMP R2, #'s'
-	@BEQ _sqr_root
+	BEQ _sqr_root
 	CMP R2, #'p'
 	@BEQ _power
 	CMP R2, #'i'
