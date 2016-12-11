@@ -62,6 +62,6 @@ get_char:
 
 read_char:    .asciz  " "
 format_str:   .asciz  "%f"
-output_str:   .asciz  "Output: %f"
+output_str:   .asciz  "Output: %f\n"
 
 .end
