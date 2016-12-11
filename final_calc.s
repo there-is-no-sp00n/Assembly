@@ -11,7 +11,7 @@ main:
     MOV R1, R0
     BL get_char
     MOV R2, R0
-    BL iprint
+    BL _iprint
     BL _where_to_go
     
 _where_to_go:
