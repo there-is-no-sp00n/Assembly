@@ -62,7 +62,9 @@ _pow:
 	@MOV R3, R0			@ move it to R3
 	POP {R1}			@ restore R1
 	
-	VCVT.U32.F32 R0, R0
+	VMOV S0, R0
+	VCVT.U32.F32 S0, S0
+	VMOV R0, S0
 	
 	VMOV S0, R1			@ move to S0
 	VMOV S1, R1
