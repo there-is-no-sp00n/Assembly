@@ -58,9 +58,10 @@ _sqr_root:
 	
     
 _printf:
-	LDR R0, =output_str
-	BL printf
-	B main
+    PUSH {LR}               @ push LR to stack
+    LDR R0, =printf_str     @ R0 contains formatted string address
+    BL printf               @ call printf
+    POP {PC}                @ pop LR from stack and return
 
 @_iprint:
 @	PUSH {LR}
@@ -91,5 +92,6 @@ read_char:    .asciz  " "
 format_str:   .asciz  "%f"
 abs_str:	.asciz	"Absolute is: " 
 output_str:   .asciz  "%f\n"
+printf_str:     .asciz      "The number entered was: %f\n"
 
 .end
