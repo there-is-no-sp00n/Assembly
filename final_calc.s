@@ -63,18 +63,19 @@ _pow:
 	POP {R1}
 	VMOV S0, R1
 	VMOV S1, R1
-lop:
+	lop:
 	CMP R3, #1
 	BEQ lop_done	
 		
 	VMUL.F32 S1, S1, S0
 	SUB R3, R3, #1
-	BNE lop
+	B lop
 	
 lop_done:
-	VCVTEQ.F64.F32 D1, S1     @ covert the result to double precision for printing
-    	VMOVEQ R1, R2, D1         @ split the double VFP register into two ARM registers
-	BEQ _printf
+	LDR R0, =pow_str
+	VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
+    	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+	BL _printf
 	B main
 	
 
