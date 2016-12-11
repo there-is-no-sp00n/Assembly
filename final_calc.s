@@ -17,15 +17,15 @@ _where_to_go:
 	CMP R2, #'a'
 	BEQ _abs
 	CMP R2, #'s'
-	BEQ _sqr_root
+	@BEQ _sqr_root
 	CMP R2, #'p'
-	BEQ _power
+	@BEQ _power
 	CMP R2, #'i'
-	BEQ _inverse
+	@BEQ _inverse
 
 _abs:
-    VMOV S0, R1             @ move return value R0 to FPU register S0
-    VABS.F32 S0, S0
+    VMOV S1, R1             @ move return value R0 to FPU register S0
+    VABS.F32 S0, S1
     VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
     VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
     BL _printf
