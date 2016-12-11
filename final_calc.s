@@ -63,24 +63,26 @@ _pow:
 	POP {R1}
 	VMOV S0, R1
 	VMOV S1, R1
+	@MOV R0, #0
 	B loop_check
 	pow_loop:
 		VMUL.F32 S1, S1, S0
 		SUB R3, R3, #1
 	loop_check:
 		CMP R3, #1
-		BNE pow_loop
-		BEQ lop_done	
+		BHS pow_loop
+		@BEQ lop_done	
 		
 	
 	@B pow_loop
-	
-lop_done:
 	LDR R0, =pow_str
 	VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
     	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
 	BL _printf
 	B main
+	
+@lop_done:
+	
 	
 
 _inverse:
