@@ -13,7 +13,7 @@ main:
     BL get_char
     POP {R1}
     MOV R2, R0
-    @BL _iprint
+    BL _iprint
     BL _where_to_go
     
 _where_to_go:
