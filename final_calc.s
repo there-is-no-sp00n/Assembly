@@ -34,7 +34,7 @@ _abs:
     
 _sqr_root:
 	VMOV S1, R1
-	VSQRT.F64 S0, S1
+	VSQRT.F32 S0, S1
 	VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
     	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
 	BL _printf
@@ -52,7 +52,7 @@ _iprint:
     VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
     VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
 	BL printf
-	POP{PC}
+	POP {PC}
 
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
