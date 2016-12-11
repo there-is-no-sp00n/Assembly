@@ -59,24 +59,26 @@ _sqr_root:
 	
 _pow:
 	BL _scanf			@ get the exponent
-	MOV R3, R0			@ move it to R3
-	POP {R1}			@ restore R1
-	VMOV S0, R1			@ move to S0
-	VMOV S1, R1			@ move to S1
-	MOV R0, #0			@ initialize the iterator
-	B loop_check			@ unconditional branch to loop_check
-	pow_loop:
-		VMUL.F32 S1, S1, S0
-		ADD R0, R0, #1
-	loop_check:
-		CMP R3, R0
-		BHS pow_loop
-		@BEQ lop_done	
+	MOV R1, R0			@ move it to R3
+	POP {R0}			@ restore R1
+	BL pow
+	
+	VMOV S0, R0			@ move to S0
+	@VMOV S1, R1			@ move to S1
+	@MOV R0, #0			@ initialize the iterator
+	@B loop_check			@ unconditional branch to loop_check
+	@pow_loop:
+	@	VMUL.F32 S1, S1, S0
+	@	ADD R0, R0, #1
+	@loop_check:
+	@	CMP R3, R0
+	@	BHS pow_loop
+	@	@BEQ lop_done	
 		
 	
 	@B pow_loop
 	LDR R0, =pow_str
-	VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
+	VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
     	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
 	BL _printf
 	B main
