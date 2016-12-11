@@ -62,7 +62,7 @@ _pow:
 	MOV R3, R0
 	POP {R1}
 	VMOV S0, R1
-	VMOV S1, S0
+	VMOV S1, R1
 lop:
 	CMP R3, #1
 	BEQ lop_done	
