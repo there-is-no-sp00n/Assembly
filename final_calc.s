@@ -57,6 +57,20 @@ _sqr_root:
 	BL _printf
 	B main
 	
+_pow:
+	BL _scanf
+	MOV R3, R0
+	POP {R1}
+	VMOV S0, R1
+	loop:
+		CMP R3, #1
+		VCVTEQ.F64.F32 D1, S0     @ covert the result to double precision for printing
+    		VMOVEQ R1, R2, D1         @ split the double VFP register into two ARM registers
+		BEQ _printf
+		
+		VMUL.F32 S0, S0, S0
+		SUB R3, R3, #1
+	
     
 _printf:
     PUSH {LR}               @ push LR to stack
@@ -85,7 +99,9 @@ _scanf:
 read_char:    .asciz  " "
 format_str:   .asciz  "%f"
 abs_str:	.asciz	"Absolute is: " 
-sqrt_str:	.asciz	"Sqaure root is: "
+sqrt_str:	.asciz	"Sqaure Root is: "
+pow_str:	.asciz	"Power output is: "
+inv_str:	.asciz	"Inverse is: "
 output_str:   .asciz  "%f\n"
 printf_str:     .asciz      "%f\n"
 
