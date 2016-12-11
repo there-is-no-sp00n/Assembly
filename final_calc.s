@@ -8,10 +8,12 @@
 
 main:
     BL _scanf
-    MOV R1, R0
+    @MOV R1, R0
+    PUSH {R1}
     BL get_char
+    POP {R1}
     MOV R2, R0
-    BL _iprint
+    @BL _iprint
     BL _where_to_go
     
 _where_to_go:
