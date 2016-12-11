@@ -14,6 +14,21 @@ main:
     @POP {R1}
     MOV R2, R0
     @BL _iprint
+    BL execute_calc
+    
+
+get_char:	
+	MOV R7, #3			@ set the mode to 3
+	MOV R0, #0			@ input stream is 0, the monitor
+	MOV R2, #1			@ read a single char
+	LDR R1, = read_char		@ store the character in data memory
+	SWI 0				@ execute the system call
+	LDR R0, [R1]			@ move the character to the return register
+	AND R0, #0xFF			@ mask out everything but the right 8 bits
+	MOV PC, LR			@ return
+	
+	
+execute_calc:	
 	CMP R2, #'a'
 	BEQ _abs
 	CMP R2, #'s'
@@ -65,15 +80,6 @@ _scanf:
     POP {PC}                @ return
 
 
-get_char:	
-	MOV R7, #3			@ set the mode to 3
-	MOV R0, #0			@ input stream is 0, the monitor
-	MOV R2, #1			@ read a single char
-	LDR R1, = read_char		@ store the character in data memory
-	SWI 0				@ execute the system call
-	LDR R0, [R1]			@ move the character to the return register
-	AND R0, #0xFF			@ mask out everything but the right 8 bits
-	MOV PC, LR			@ return
 
 
 
