@@ -63,13 +63,17 @@ _pow:
 	POP {R1}
 	VMOV S0, R1
 	VMOV S1, R1
-	lop:
-	CMP R3, #1
-	BEQ lop_done	
+	B loop_check
+	pow_loop:
+		VMUL.F32 S1, S1, S0
+		SUB R3, R3, #1
+	loop_check:
+		CMP R3, #1
+		BNE pow_loop
+		BEQ lop_done	
 		
-	VMUL.F32 S1, S1, S0
-	SUB R3, R3, #1
-	B lop
+	
+	@B pow_loop
 	
 lop_done:
 	LDR R0, =pow_str
