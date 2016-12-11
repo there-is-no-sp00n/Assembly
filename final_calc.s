@@ -51,11 +51,13 @@ _abs:
     B main
     
 _sqr_root:
-	VMOV S1, R1
-	VSQRT.F32 S0, S1
+	POP {R1}
+	VMOV S0, R1
+	VSQRT.F32 S0, S0
 	VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
     	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
 	BL _printf
+	B main
 	
     
 _printf:
@@ -93,6 +95,6 @@ read_char:    .asciz  " "
 format_str:   .asciz  "%f"
 abs_str:	.asciz	"Absolute is: " 
 output_str:   .asciz  "%f\n"
-printf_str:     .asciz      "The number entered was: %f\n"
+printf_str:     .asciz      " %f\n"
 
 .end
