@@ -58,18 +58,18 @@ _sqr_root:
 	B main
 	
 _pow:
-	BL _scanf
-	MOV R3, R0
-	POP {R1}
-	VMOV S0, R1
-	VMOV S1, R1
-	@MOV R0, #0
-	B loop_check
+	BL _scanf			@ get the exponent
+	MOV R3, R0			@ move it to R3
+	POP {R1}			@ restore R1
+	VMOV S0, R1			@ move to S0
+	VMOV S1, R1			@ move to S1
+	MOV R0, #0			@ initialize the iterator
+	B loop_check			@ unconditional branch to loop_check
 	pow_loop:
 		VMUL.F32 S1, S1, S0
-		SUB R3, R3, #1
+		ADD R0, R0, #1
 	loop_check:
-		CMP R3, #1
+		CMP R3, R0
 		BHS pow_loop
 		@BEQ lop_done	
 		
