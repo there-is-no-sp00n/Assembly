@@ -7,11 +7,11 @@
 .func main
 
 main:
-    BL _scanf
-    PUSH {R0}
-    BL get_char
-    MOV R2, R0
-    BL execute_calc
+    BL _scanf				@ get the first number as a float
+    PUSH {R0}				@ back it up
+    BL get_char				@ get the char for calculator operation
+    MOV R2, R0				@ move it to R2
+    BL execute_calc			@ branch to execute_calc
     
 
 get_char:	
@@ -26,34 +26,36 @@ get_char:
 	
 	
 execute_calc:	
-	CMP R2, #'a'
+	CMP R2, #'a'			@ if 'a' branch to _abs
 	BEQ _abs
-	CMP R2, #'s'
+	CMP R2, #'s'			@ if 's' branch to _sqr_root
 	BEQ _sqr_root
-	CMP R2, #'p'
+	CMP R2, #'p'			@ if 'p' branch to _pow
 	BEQ _pow
-	CMP R2, #'i'
+	CMP R2, #'i'			@ if 'i' branch to _inverse
 	BEQ _inverse
 
 _abs:
-    LDR R0, =abs_str
-    BL printf
-    POP {R1}
-    VMOV S0, R1             @ move return value R0 to FPU register S0
-    VABS.F32 S0, S0
-    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
-    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
-    BL _printf
-    B main
+    LDR R0, =abs_str			@ load the string
+    BL printf				@ print it
+    
+    POP {R1}				@ restore R1
+    VMOV S0, R1             		@ move R1 to FPU register S0
+    VABS.F32 S0, S0			@ use the VABS instruction
+    VCVT.F64.F32 D1, S0     		@ covert the result to double precision for printing
+    VMOV R1, R2, D1         		@ split the double VFP register into two ARM registers
+    BL _printf				@ branch to _printf
+    B main				@ loop back up to main
     
 _sqr_root:
-	LDR R0, =sqrt_str
-	BL printf
-	POP {R1}
-	VMOV S0, R1
-	VSQRT.F32 S0, S0
-	VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
-    	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+	LDR R0, =sqrt_str		@ load the string
+	BL printf			@ print it
+	
+	POP {R1}			@ restore R1
+	VMOV S0, R1			@ move R1 to FPU register S0
+	VSQRT.F32 S0, S0		@ use the VSQRT instruction
+	VCVT.F64.F32 D1, S0     	@ covert the result to double precision for printing
+    	VMOV R1, R2, D1        		@ split the double VFP register into two ARM registers
 	BL _printf
 	B main
 	
@@ -62,49 +64,47 @@ _pow:
 	@MOV R3, R0			@ move it to R3
 	POP {R1}			@ restore R1
 	
-	VMOV S0, R0
-	VCVT.U32.F32 S0, S0
-	VMOV R0, S0
+	VMOV S0, R0			@ move the iterator to S0
+	VCVT.U32.F32 S0, S0		@ convert the iterator to int
+	VMOV R0, S0			@ put it back into R0
 	
-	VMOV S0, R1			@ move to S0
-	VMOV S1, R1
+	VMOV S0, R1			@ move R1 to S0
+	VMOV S1, R1			@ move R1 to S1
 	
 	pow_it:
-		CMP R0, #1
-		BEQ lop_done
-		VMUL.F32 S1, S1, S0
-		SUB R0, R0, #1
-		BHS pow_it
+		CMP R0, #1		@ check to see if done iterating
+		BEQ pow_done		@ if so branch to pow_done
+		VMUL.F32 S1, S1, S0	@ use the VMUL instruction
+		SUB R0, R0, #1		@ subtract from the iterator
+		BHS pow_it		@ loop back up to pow_it
 	
 	
-lop_done:
-	LDR R0, =pow_str
-	BL printf
-	@VMOV S0, R1
-	VCVT.F64.F32 D1, S1     @ covert the result to double precision for printing
-    	VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
-	BL _printf
-	B main
+pow_done:
+	LDR R0, =pow_str		@ load the string
+	BL printf			@ print it
+	VCVT.F64.F32 D1, S1     	@ covert the result to double precision for printing
+    	VMOV R1, R2, D1         	@ split the double VFP register into two ARM registers
+	BL _printf			@ branch to _printf
+	B main				@ loop back up to main
 	
 
 _inverse:
-	LDR R0, =inv_str
-	BL printf
+	LDR R0, =inv_str		@ load the string
+	BL printf			@ print it
 	
-	POP {R1}
-	VMOV S0, R1
-	MOV R5, #1
-	VMOV S1, R5
+	POP {R1}			@ restore R1
+	VMOV S0, R1			@ move it to FPU register S0
+	MOV R5, #1			@ move 1 to R5
+	VMOV S1, R5			@ move R5 to FPU register S1
 	
-	@VCVT.F32.U32 S0, S0     @ convert unsigned bit representation to single float
-    	VCVT.F32.U32 S1, S1     @ convert unsigned bit representation to single float
+    	VCVT.F32.U32 S1, S1     	@ convert unsigned bit representation to single float
 	
-	VDIV.F32 S2, S1, S0     @ compute S2 = S0 * S1
+	VDIV.F32 S2, S1, S0     	@ compute S2 = S0 * S1
     
-    	VCVT.F64.F32 D4, S2     @ covert the result to double precision for printing
-    	VMOV R1, R2, D4         @ split the double VFP register into two ARM registers
-	BL _printf
-	B main
+    	VCVT.F64.F32 D4, S2     	@ covert the result to double precision for printing
+    	VMOV R1, R2, D4         	@ split the double VFP register into two ARM registers
+	BL _printf			@ branch to _printf
+	B main				@ loop back up to main
 	
     
 _printf:
