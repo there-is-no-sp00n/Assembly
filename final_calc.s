@@ -62,6 +62,7 @@ _pow:
 	MOV R3, R0
 	POP {R1}
 	VMOV S0, R1
+	VMOV S1, S0
 lop:
 	CMP R3, #1
 	VCVTEQ.F64.F32 D1, S0     @ covert the result to double precision for printing
@@ -69,9 +70,9 @@ lop:
 	BEQ _printf
 	B main
 		
-	VMUL.F32 S0, S0, S0
+	VMUL.F32 S1, S1, S0
 	SUB R3, R3, #1
-	B lop
+	BNE lop
 	
 
 _inverse:
