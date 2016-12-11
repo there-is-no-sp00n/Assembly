@@ -39,6 +39,8 @@ execute_calc:
 	@BEQ _inverse
 
 _abs:
+    LDR R0, =abs_str
+    BL printf
     POP {R1}
     VMOV S0, R1             @ move return value R0 to FPU register S0
     VABS.F32 S0, S0
@@ -87,6 +89,7 @@ _scanf:
 
 read_char:    .asciz  " "
 format_str:   .asciz  "%f"
-output_str:   .asciz  "Output: %f\n"
+abs_str:	.asciz	"Absolute is: " 
+output_str:   .asciz  "%f\n"
 
 .end
