@@ -11,8 +11,29 @@ main:
     MOV R1, R0
     BL get_char
     MOV R2, R0
+    BL _where_to_go
+    
+_where_to_go:
+	CMP R2, #'a'
+	BEQ _abs
+	CMP R2, #'s'
+	BEQ _sqr_root
+	CMP R2, #'p'
+	BEQ _power
+	CMP R2, #'i'
+	BEQ _inverse
 
-
+_abs:
+    VMOV S0, R1             @ move return value R0 to FPU register S0
+    VABS S0, S0
+    VCVT.F64.F32 D1, S0     @ covert the result to double precision for printing
+    VMOV R1, R2, D1         @ split the double VFP register into two ARM registers
+    BL _printf
+    
+_printf:
+	LDR R0, =output_str
+	BL printf
+	B main
 
 _scanf:
     PUSH {LR}               @ store LR since scanf call overwrites
@@ -41,6 +62,6 @@ get_char:
 
 read_char:    .asciz  " "
 format_str:   .asciz  "%f"
-
+output_str:   .asciz  "Output: %f"
 
 .end
