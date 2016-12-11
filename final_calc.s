@@ -14,9 +14,6 @@ main:
     @POP {R1}
     MOV R2, R0
     @BL _iprint
-    BL _where_to_go
-    
-_where_to_go:
 	CMP R2, #'a'
 	BEQ _abs
 	CMP R2, #'s'
